@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宇浩个人游戏主页</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #0a2540, #1e3a5f);
+            color: #fff;
+            line-height: 1.6;
+        }
+        header {
+            text-align: center;
+            padding: 40px 20px 20px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+        .logo {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 15px;
+            filter: drop-shadow(0 10px 30px rgba(0, 191, 255, 0.5));
+        }
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 8px;
+            background: linear-gradient(to right, #00bfff, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        nav {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav a {
+            color: #fff;
+            margin: 0 20px;
+            text-decoration: none;
+            font-weight: 700;
+        }
+        nav a:hover { color: #00bfff; }
+        
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        section {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h2 { font-size: 2rem; margin-bottom: 20px; color: #00bfff; text-align: center; }
+        
+        .game-container { text-align: center; }
+        canvas {
+            background: #112233;
+            border: 6px solid #00bfff;
+            border-radius: 15px;
+            box-shadow: 0 0 30px #00bfff;
+            max-width: 100%;
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: rgba(0,0,0,0.3);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- AI生成的SVG Logo（不用下载图片） -->
+        <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#00bfff"/>
+                    <stop offset="100%" stop-color="#ffffff"/>
+                </linearGradient>
+            </defs>
+            <!-- 背景圆环 -->
+            <circle cx="100" cy="100" r="92" fill="none" stroke="#00bfff" stroke-width="8" stroke-opacity="0.3"/>
+            <!-- 科技电路装饰 -->
+            <path d="M40 60 L60 40 L140 40 L160 60" fill="none" stroke="#00bfff" stroke-width="6" stroke-linejoin="round" opacity="0.6"/>
+            <path d="M40 140 L60 160 L140 160 L160 140" fill="none" stroke="#00bfff" stroke-width="6" stroke-linejoin="round" opacity="0.6"/>
+            <!-- 主文字 宇浩 -->
+            <text x="100" y="115" font-family="Noto Sans SC" font-size="68" font-weight="700" fill="url(#grad)" text-anchor="middle" dominant-baseline="middle">宇浩</text>
+            <!-- 小火箭装饰 -->
+            <g transform="translate(125 45)">
+                <polygon points="10,0 0,25 20,25" fill="#00bfff"/>
+                <rect x="4" y="25" width="12" height="12" fill="#00bfff"/>
+            </g>
+            <!-- 发光效果 -->
+            <circle cx="100" cy="100" r="95" fill="none" stroke="#00bfff" stroke-width="4" opacity="0.2"/>
+        </svg>
+        
+        <h1>宇浩个人游戏主页</h1>
+        <p style="font-size:1.3rem; opacity:0.9;">AI 自然语言生成 · 作业2 成果展示</p >
+    </header>
+
+    <nav>
+        <a href=" ">关于我</a >
+        <a href="#game">贪吃蛇游戏</a >
+    </nav>
+
+    <div class="container">
+        <section id="about">
+            <h2>👋 关于我</h2>
+            <p>大家好，我是宇浩！这个网站是用AI工具（Grok）通过自然语言一步步生成的。</p >
+            <p>里面有我亲手设计的Logo、个人简介，还有经典贪吃蛇小游戏～</p >
+        </section>
+
+        <section id="game" class="game-container">
+            <h2>🐍 经典贪吃蛇（直接玩）</h2>
+            <canvas id="snakeCanvas" width="480" height="480"></canvas>
+            <div style="margin-top:20px; font-size:1.1rem;">
+                <strong>得分：</strong><span id="score">0</span>　　
+                <strong>最高分：</strong><span id="highScore">0</span><br>
+                用手机或键盘 <strong>↑ ↓ ← →</strong> 控制<br>
+                <button onclick="restartGame()" style="margin-top:15px;padding:12px 24px;font-size:1.1rem;background:#00bfff;color:#fff;border:none;border-radius:50px;cursor:pointer;">重新开始</button>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2026 宇浩 | 由 Grok AI 完全生成</p >
+        <p style="color:#00bfff; font-style:italic;">任务1 Logo（SVG） + 任务2 网页代码 全部搞定</p >
+    </footer>
+
+    <script>
+        // 贪吃蛇游戏代码（和之前一样，可直接玩）
+        const canvas = document.getElementById('snakeCanvas');
+        const ctx = canvas.getContext('2d');
+        const grid = 24;
+        let snake = [{x: 10, y: 10}];
+        let dx = 1, dy = 0;
+        let food = {x: 15, y: 15};
+        let score = 0;
+        let gameInterval;
+        let gameSpeed = 120;
+        let highScore = localStorage.getItem('snakeHighScore') || 0;
+        document.getElementById('highScore').textContent = highScore;
+
+        function draw() {
+            ctx.fillStyle = '#112233';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#00ff88';
+            snake.forEach(s => ctx.fillRect(s.x*grid, s.y*grid, grid-2, grid-2));
+            ctx.fillStyle = '#ff3366';
+            ctx.fillRect(food.x*grid, food.y*grid, grid-2, grid-2);
+        }
+
+        function move() {
+            const head = {x: snake[0].x + dx, y: snake[0].y + dy};
+            if (head.x < 0 || head.x >= 20 || head.y < 0 || head.y >= 20 || snake.some(s => s.x === head.x && s.y === head.y)) {
+                alert(`游戏结束！得分 \( {score} 分 🎉\n最高纪录： \){highScore} 分`);
+                clearInterval(gameInterval);
+                return;
+            }
+            snake.unshift(head);
+            if (head.x === food.x && head.y === food.y) {
+                score += 10;
+                document.getElementById('score').textContent = score;
+                if (score > highScore) {
+                    highScore = score;
+                    localStorage.setItem('snakeHighScore', highScore);
+                    document.getElementById('highScore').textContent = highScore;
+                }
+                food = {x: Math.floor(Math.random()*20), y: Math.floor(Math.random()*20)};
+            } else snake.pop();
+            draw();
+        }
+
+        function changeDirection(e) {
+            if (e.key === 'ArrowUp' && dy !== 1) { dx=0; dy=-1; }
+            if (e.key === 'ArrowDown' && dy !== -1) { dx=0; dy=1; }
+            if (e.key === 'ArrowLeft' && dx !== 1) { dx=-1; dy=0; }
+            if (e.key === 'ArrowRight' && dx !== -1) { dx=1; dy=0; }
+        }
+
+        function startGame() {
+            if (gameInterval) clearInterval(gameInterval);
+            snake = [{x:10,y:10}]; dx=1; dy=0; score=0;
+            document.getElementById('score').textContent = '0';
+            food = {x:15,y:15};
+            draw();
+            gameInterval = setInterval(move, gameSpeed);
+        }
+
+        function restartGame() { startGame(); }
+
+        window.addEventListener('keydown', changeDirection);
+        startGame();
+    </script>
+</body>
+</html>
